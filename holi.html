@@ -20,7 +20,7 @@
 
         .photo-container {
             position: absolute;
-            top: 50%;
+            top: calc(50% + 40px); /* Adjusted to move the image slightly higher */
             left: 50%;
             transform: translate(-50%, -50%);
             width: 300px;
@@ -30,13 +30,14 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             border: 5px solid white;
             animation: glow 1.5s infinite alternate;
+            margin-bottom: 150px; /* Space between the image and the button */
         }
 
         .photo-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease-in-out; /* Smooth rotation effect */
+            transition: transform 0.5s ease-in-out;
         }
 
         @keyframes glow {
@@ -108,8 +109,8 @@
 
         /* Fixed "Happy Holi" message at the top */
         .holi-message {
-            position: fixed; 
-            top: 10px; /* Slightly below the top edge */
+            position: fixed;
+            top: 10px;
             left: 50%;
             transform: translateX(-50%);
             font-size: 50px;
@@ -117,7 +118,7 @@
             color: white;
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
             animation: fadeIn 3s ease-in-out infinite;
-            z-index: 999; /* Ensure it stays on top of other elements */
+            z-index: 999;
         }
 
         @keyframes fadeIn {
@@ -125,38 +126,37 @@
             50% { opacity: 1; }
             100% { opacity: 0; }
         }
-
     </style>
 </head>
 <body onclick="splashColor(event)">
 
     <div class="holi-message">
-        Happy Holi! 🎉
+        🙏 आप सभी को होली की हार्दिक शुभकामनाएं ✍️
     </div>
 
     <div class="photo-container">
         <img id="profilePic" src="pic/prince.jpg" alt="Holi Friends">
     </div>
 
+    <!-- Add audio element with the song -->
     <audio id="holiMusic" loop autoplay>
-        <source src="happy-holi.mp3" type="audio/mpeg">
+        <source src="music/happy-holi.mp3" type="audio/mpeg">  <!-- Local file path -->
+        <!-- Or use a URL, for example: <source src="https://example.com/happy-holi.mp3" type="audio/mpeg"> -->
         Your browser does not support the audio element.
     </audio>
 
     <div class="music-controls">
-        <button onclick="playMusic()">🎶 Play</button>
-        <button onclick="pauseMusic()">⏸ Pause</button>
+        <button onclick="toggleMusic()">🎶 Play</button>
     </div>
 
     <script>
         function splashColor(event) {
-            // Create color splash on the whole body
             const splash = document.createElement("div");
             splash.classList.add("color-splash");
             splash.style.left = `${event.clientX - 25}px`;
             splash.style.top = `${event.clientY - 25}px`;
 
-            let colors = ["white","red", "blue", "yellow", "green", "purple", "orange", "pink"];
+            let colors = ["white", "red", "blue", "yellow", "green", "purple", "orange", "pink"];
             splash.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
 
             document.body.appendChild(splash);
@@ -170,11 +170,10 @@
                 splash.remove();
             }, 1000);
 
-            // Create color splash directly on the photo (face effect)
             const faceSplash = document.createElement("div");
             faceSplash.classList.add("color-splash-on-face");
-            faceSplash.style.left = `${event.clientX - 200}px`;  // Adjust X position based on the photo
-            faceSplash.style.top = `${event.clientY - 200}px`;   // Adjust Y position based on the photo
+            faceSplash.style.left = `${event.clientX - 200}px`;
+            faceSplash.style.top = `${event.clientY - 200}px`;
 
             let faceColors = ["red", "yellow", "green", "pink", "blue"];
             faceSplash.style.backgroundColor = faceColors[Math.floor(Math.random() * faceColors.length)];
@@ -185,23 +184,27 @@
                 faceSplash.remove();
             }, 1000);
 
-            // Rotate the photo when a splash occurs
             rotateImage();
         }
 
         function rotateImage() {
             const image = document.getElementById("profilePic");
             const currentRotation = parseInt(image.style.transform.replace('rotate(', '').replace('deg)', '')) || 0;
-            const newRotation = currentRotation + 15; // Rotate by 15 degrees on each click
-            image.style.transform = `rotate(${newRotation}deg)`; // Apply the new rotation
+            const newRotation = currentRotation + 15;
+            image.style.transform = `rotate(${newRotation}deg)`;
         }
 
-        function playMusic() {
-            document.getElementById("holiMusic").play();
-        }
+        function toggleMusic() {
+            const music = document.getElementById("holiMusic");
+            const button = document.querySelector(".music-controls button");
 
-        function pauseMusic() {
-            document.getElementById("holiMusic").pause();
+            if (music.paused) {
+                music.play();
+                button.textContent = '⏸ Pause';
+            } else {
+                music.pause();
+                button.textContent = '🎶 Play';
+            }
         }
     </script>
 
