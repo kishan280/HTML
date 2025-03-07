@@ -20,7 +20,7 @@
 
         .photo-container {
             position: absolute;
-            top: calc(50% + 40px); /* Adjusted to move the image slightly higher */
+            top: calc(50% + 100px); /* Move the image further down */
             left: 50%;
             transform: translate(-50%, -50%);
             width: 300px;
@@ -30,7 +30,6 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             border: 5px solid white;
             animation: glow 1.5s infinite alternate;
-            margin-bottom: 150px; /* Space between the image and the button */
         }
 
         .photo-container img {
@@ -80,33 +79,6 @@
             }
         }
 
-        .music-controls {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.8);
-            padding: 10px 20px;
-            border-radius: 20px;
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        button {
-            background: #ff7300;
-            border: none;
-            color: white;
-            padding: 10px 15px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 10px;
-        }
-
-        button:hover {
-            background: #ff0000;
-        }
-
         /* Fixed "Happy Holi" message at the top */
         .holi-message {
             position: fixed;
@@ -131,7 +103,7 @@
 <body onclick="splashColor(event)">
 
     <div class="holi-message">
-        🙏 आप सभी को होली की हार्दिक शुभकामनाएं ✍️
+        🙏आप सभी को होली की हार्दिक शुभकामनाएं
     </div>
 
     <div class="photo-container">
@@ -141,13 +113,8 @@
     <!-- Add audio element with the song -->
     <audio id="holiMusic" loop autoplay>
         <source src="music/happy-holi.mp3" type="audio/mpeg">  <!-- Local file path -->
-        <!-- Or use a URL, for example: <source src="https://example.com/happy-holi.mp3" type="audio/mpeg"> -->
         Your browser does not support the audio element.
     </audio>
-
-    <div class="music-controls">
-        <button onclick="toggleMusic()">🎶 Play</button>
-    </div>
 
     <script>
         function splashColor(event) {
@@ -192,19 +159,6 @@
             const currentRotation = parseInt(image.style.transform.replace('rotate(', '').replace('deg)', '')) || 0;
             const newRotation = currentRotation + 15;
             image.style.transform = `rotate(${newRotation}deg)`;
-        }
-
-        function toggleMusic() {
-            const music = document.getElementById("holiMusic");
-            const button = document.querySelector(".music-controls button");
-
-            if (music.paused) {
-                music.play();
-                button.textContent = '⏸ Pause';
-            } else {
-                music.pause();
-                button.textContent = '🎶 Play';
-            }
         }
     </script>
 
